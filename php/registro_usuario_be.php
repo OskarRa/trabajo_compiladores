@@ -11,8 +11,8 @@
     $contrasena_encriptada = hash('sha512', $contrasena);
 
 
-    $query = "INSERT INTO usuarios (nombre_completo, correo, usuario, contrasena) 
-              VALUES('$nombre_completo','$correo','$usuario','$contrasena_encriptada')";
+    $query = "INSERT INTO usuarios (nombre_completo, correo, usuario, contrasena, id_rol) 
+              VALUES('$nombre_completo','$correo','$usuario','$contrasena_encriptada',2)";
 
     //Verificar que el correo no se repita en la base de datos
     $verificar_correo = mysqli_query($conexion,"SELECT * FROM usuarios WHERE correo = '$correo'");
