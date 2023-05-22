@@ -1,9 +1,16 @@
 <?php
+
     if(!empty($_POST)){
         $alert='';
         if(empty($_POST['nombre']) || empty($_POST['correo']) || empty($_POST['usuario']) 
         || empty($_POST['contrasena']) || empty($_POST['rol'])){
-            $_alert = '<p class="msg_error"> Todos los campos son obligatorios </p>';
+
+            $alert ='<p class="msg_error"> Todos los campos son obligatorios </p>';
+            echo '
+            <script>
+                alert("Todos los campos son obligatorios ");
+            </script>
+        ';
         }else{
 
             include '../conexion_be.php';
@@ -15,25 +22,40 @@
             $rol                = $_POST['rol'];
 
             $contrasena_encriptada = hash('sha512', $contrasena);
+
+            $query = mysqli_query($conexion,"SELECT * FROM usuarios WHERE usuario = '$usuario' OR correo = '$correo'");
+            $result = mysqli_fetch_array($query);
+
             
+            if($result > 0 ){
+                $alert ='<p class="msg_error"> El correo o el usuario ya existe</p>';
+                echo '
+                <script>
+                    alert("El correo o el usuario ya existe");
+                </script>
+                ';
+            } else{
+                $query_insert = mysqli_query($conexion,"INSERT INTO usuarios (nombre_completo, correo, usuario, contrasena, id_rol) 
+                VALUES('$nombre_completo','$correo','$usuario','$contrasena_encriptada','$rol')");
 
 
-            $query = "INSERT INTO usuarios (nombre_completo, correo, usuario, contrasena, id_rol) 
-            VALUES('$nombre_completo','$correo','$usuario','$contrasena_encriptada','$rol')";
-
-            $verificar_correo = mysqli_query($conexion,"SELECT * FROM usuarios WHERE correo = '$correo'");
-
-            if(mysqli_num_rows($verificar_correo) > 0 ){
-                $alert='<p class="msg_error"> El correo o el usuario ya existe</p>';
+                if($query_insert){
+                    $alert='<p class="msg_save"> Usuario creado correctamente</p>';
+                    echo '
+                    <script>
+                        alert("Usuario creado correctamente");
+                    </script>
+                    ';                    
+                }else{
+                    $alert='<p class="msg_error"> Error al crear el usuario</p>';
+                    echo '
+                    <script>
+                        alert("Erro al crear el usuario");
+                    </script>
+                    ';                    
+                }
+                mysqli_close($conexion);
             }
-            $ejecutar = mysqli_query($conexion,$query);
-            
-            if($ejecutar){
-                $alert='<p class="msg_save"> Usuario creado correctamente</p>';
-            }else{
-                $alert='<p class="msg_error"> Error al crear el usuario</p>';
-            }
-            mysqli_close($conexion);
         }
     }
 ?>
@@ -49,6 +71,8 @@
 	<script type= "text/javascript" src="sistema/js/function.js"></script>
     <?php include "includes/script.php";?>
 	<title>Registro de Usuarios</title>
+
+
 </head>
 <body>
 	<?php include "includes/header.php";?>
@@ -56,7 +80,9 @@
         <div class="form_register">
             <h1>Registro de usuario</h1>
             <hr>
-            <div class="alert"><?php echo isset($_alert) ? $alert :'' ;?></div>
+            <div class="alert">
+                <?php echo isset($alert) ? $alert :'' ; ?>
+            </div>
 
 
             <form action="" method = "POST">
