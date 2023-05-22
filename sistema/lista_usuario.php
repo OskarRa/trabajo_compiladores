@@ -40,8 +40,8 @@ include '../conexion_be.php';
 
         <?php
 
-            $query = mysqli_query($conexion,  "SELECT u.id, u.nombre_completo, u.correo, u.usuario, u.id_rol, r.id 
-                                                FROM usuarios u INNER JOIN roles r ON u.id_rol = r.id;");
+            $query = mysqli_query($conexion,  "SELECT u.id, u.nombre_completo, u.correo, u.usuario, u.id_rol, r.id_r 
+                                                FROM usuarios u INNER JOIN roles r ON u.id_rol = r.id_r;");
             $result = mysqli_num_rows($query);
 
             if($result > 0 ){
