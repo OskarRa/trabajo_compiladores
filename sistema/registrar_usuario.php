@@ -1,5 +1,17 @@
 <?php
+    session_start();
 
+    if(!isset($_SESSION['usuario'])){
+        echo '
+            <script>
+                alert("Porfavor Inicie session");
+                window.location = "index.php";
+            </script>
+        ';
+        session_destroy();
+        die();
+    }
+    
     if(!empty($_POST)){
         $alert='';
         if(empty($_POST['nombre']) || empty($_POST['correo']) || empty($_POST['usuario']) 
