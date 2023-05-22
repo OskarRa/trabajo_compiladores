@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include 'conexion_be.php';
+    include '../conexion_be.php';
 
     $correo     = $_POST['correo'];
     $contrasena = $_POST['contrasena'];
@@ -14,13 +14,12 @@
     if (!is_null($filas) && $filas['id_rol'] == 1){ //administrador
 
         $_SESSION['usuario'] = $correo;
-        header("location: ../admin.php");
-        //header("location: ..//menu_admin/admin.php");
+        header("location: ../sistema/admin.php");
 
     }else if(!is_null($filas) && $filas['id_rol'] == 2){ //cliente
 
         $_SESSION['usuario'] = $correo;
-        header("location: ../cliente.php");
+        header("location: ../sistema/cliente.php");
         
     } else{
         echo '
