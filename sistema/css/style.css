@@ -192,6 +192,12 @@ label{
 	font-family: 'GothamBook';
 	margin: 15px auto 5px auto;
 }
+
+.notItemOne option:first-child{
+	display: none;
+}
+
+
 input,select{
 	display: block;
 	width: 100%;

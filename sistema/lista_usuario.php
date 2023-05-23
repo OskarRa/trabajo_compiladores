@@ -49,13 +49,14 @@ include '../conexion_be.php';
 
             ?>
                 <tr>
-                    <td><?php  echo $data["id"]?></td>
+                    <td><?php  echo $data["id"]?></td> <!--Id del usuario para obtener en el link-->
                     <td><?php  echo $data["nombre_completo"]?></td>
                     <td><?php  echo $data["correo"]?></td>
                     <td><?php  echo $data["usuario"]?></td>
                     <td><?php  echo $data["id_rol"]?></td>
                     <td>
-                        <a class="link_edit" href="">Editar</a>
+                        <a class="link_edit" href="editar_usuario.php?id=<?php  echo $data["id"] ?>">Editar</a>
+
                         <a class="link_delete"href="">Eliminar</a>
                     </td>
                 </tr>
