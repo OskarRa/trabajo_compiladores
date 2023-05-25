@@ -2,34 +2,36 @@
     session_start();
     include '../conexion_be.php';
 
-    $correo     = $_POST['correo'];
+    $correo = $_POST['correo'];
     $contrasena = $_POST['contrasena'];
-    $contrasena_encriptada = hash('sha512',$contrasena);
+    $contrasena_encriptada = hash('sha512', $contrasena);
 
-    $validar_login = mysqli_query($conexion, "SELECT * FROM usuarios WHERE 
-                    correo = '$correo' and contrasena = '$contrasena_encriptada'");
-    
-    $filas = mysqli_fetch_array($validar_login);
+    $query = "SELECT * FROM usuarios WHERE correo = '$correo' AND contrasena = '$contrasena_encriptada'";
+    $resultado = mysqli_query($conexion, $query);
 
-    if (!is_null($filas) && $filas['id_rol'] == 1){ //administrador
-
-        $_SESSION['usuario'] = $correo;
-        header("location: ../sistema/admin.php");
-
-    }else if(!is_null($filas) && $filas['id_rol'] == 2){ //cliente
+    if (mysqli_num_rows($resultado) > 0) {
+        $fila = mysqli_fetch_assoc($resultado);
+        $id_rol = $fila['id_rol'];
 
         $_SESSION['usuario'] = $correo;
-        header("location: ../sistema/cliente.php");
-        
-    } else{
+
+        if ($id_rol == 1) {
+            header("Location: ../sistema/admin.php");
+            exit;
+        } elseif ($id_rol == 2) {
+            header("Location: ../sistema/cliente.php");
+            exit;
+        }
+    } else {
         echo '
             <script>
-                alert("Usuario o contraseña incorrectos 123");
+                alert("Usuario o contraseña incorrectos");
                 window.location = "../index.php";
             </script>
         ';
-        exit;          
+        exit;
     }
+
 
 
 /*
