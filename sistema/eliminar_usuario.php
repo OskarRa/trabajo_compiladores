@@ -53,7 +53,7 @@
             <h2>¿Estás seguro de eliminar el siguiente usuario?</h2>
             <p>Nombre: <span><?php echo $nombre_completo; ?></span></p>
             <p>Usuario: <span><?php echo $usuario; ?></span></p>
-            <p>Rol: <span><?php echo $id_rol; ?></span></p>
+            <p>Rol: <span><?php if ($id_rol == 1){ echo "Administrador";} else{ echo "Cliente";}; ?></span></p>
 
             <form method="POST">
                 <input type="hidden" name="idusuario" value="<?php echo $id_usuario_eliminar; ?>">

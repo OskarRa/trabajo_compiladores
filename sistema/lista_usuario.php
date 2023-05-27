@@ -35,7 +35,7 @@
                 <td><?php echo $data["nombre_completo"]; ?></td>
                 <td><?php echo $data["correo"]; ?></td>
                 <td><?php echo $data["usuario"]; ?></td>
-                <td><?php echo $data["id_rol"]; ?></td>
+                <td><?php if($data["id_rol"] == 1){ echo "Administrador";} else { echo "Cliente";}; ?></td>
                 <td>
                     <a class="link_edit" href="editar_usuario.php?id=<?php echo $data["id"]; ?>">Editar</a>
                     <a class="link_delete" href="eliminar_usuario.php?id=<?php echo $data["id"]; ?>">Eliminar</a>

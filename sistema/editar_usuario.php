@@ -39,8 +39,8 @@
             $contrasena_encriptada = hash('sha512', $contrasena);
 
             $query = mysqli_query($conexion,"SELECT * FROM usuarios 
-                                            WHERE (usuario = '$usuario' AND id != $idUsuario ) 
-                                            OR (correo = '$correo' AND id !=$idUsuario)");
+                                            WHERE (usuario = '$usuario' AND id != 30 ) 
+                                            OR (correo = '$correo' AND id != 30)");
 
             $result = mysqli_fetch_array($query);
 
