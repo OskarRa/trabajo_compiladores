@@ -211,10 +211,10 @@
 	</section>
 
 	<?php	include "includes/footer.php";?>
+    <?php
+        mysqli_close($conexion);
+    ?>
 
 
 </body>
 </html>
-
-
-

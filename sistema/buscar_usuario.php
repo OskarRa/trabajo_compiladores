@@ -17,6 +17,7 @@
             $busqueda = strtolower($_REQUEST['busqueda']);
             if(empty($busqueda)){
                 header("location:lista_usuario.php");
+                mysqli_close($conexion);
             }
         ?>
         <h1>Buscar de Usuarios</h1>
@@ -77,6 +78,7 @@
 
 
                 $result = mysqli_query($conexion, $query);
+                mysqli_close($conexion);
                 if(mysqli_num_rows($result) > 0) {
                     while($data = mysqli_fetch_array($result)) {
             ?>
@@ -142,5 +144,6 @@
     </section>
 
     <?php include "includes/footer.php"; ?>
+
 </body>
 </html>
