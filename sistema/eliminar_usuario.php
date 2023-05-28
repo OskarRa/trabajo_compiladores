@@ -2,9 +2,16 @@
     include "../conexion_be.php";
 
     if (!empty($_POST)) {
+
+        if($_POST['id'] == 1){
+            header('Location: lista_usuario.php');
+            exit;
+        }
         $idusuario = $_POST['idusuario'];
 
-        $query_delete = mysqli_query($conexion, "DELETE FROM usuarios WHERE id = $idusuario");
+       // $query_delete = mysqli_query($conexion, "DELETE FROM usuarios WHERE id = $idusuario");
+        $query_delete = mysqli_query($conexion, "UPDATE usuarios SET estatus = 0 WHERE id = $idusuario");
+
 
         if ($query_delete) {
             header('Location: lista_usuario.php');
@@ -14,7 +21,7 @@
         }
     }
 
-    if (empty($_REQUEST['id'])) {
+    if (empty($_REQUEST['id']) || $_REQUEST['id'] == 1) {
         header("Location: lista_usuario.php");
         exit;
     }
